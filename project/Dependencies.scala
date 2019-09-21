@@ -4,14 +4,14 @@ object Dependencies {
 
   private val versions: Map[String, String] = Map(
 
-    "http4s" -> "0.19.0-M4",
+    "http4s" -> "0.20.10",
     "circe" -> "0.12.1",
 
     "pureconfig" -> "0.12.0",
     "scala_test" -> "3.0.8",
     "scala_mock" -> "4.4.0",
 
-    "cats" -> "1.4.0",
+    "cats" -> "2.0.0",
 
     "macwire" -> "2.3.3",
 
