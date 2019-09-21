@@ -33,9 +33,9 @@
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/modules.xml
+# .idea/com.romanidze.transportik.modules.xml
 # .idea/*.iml
-# .idea/modules
+# .idea/com.romanidze.transportik.modules
 # *.iml
 # *.ipr
 
@@ -80,7 +80,7 @@ fabric.properties
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 # *.iml
-# modules.xml
+# com.romanidze.transportik.modules.xml
 # .idea/misc.xml
 # *.ipr
 
