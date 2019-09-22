@@ -77,7 +77,7 @@ object Dependencies {
     "org.scalamock" %% "scalamock" % versions("scala_mock")
   ).map(_ % Test)
 
-  private val doobieTest: Seq[ModuleID] = Seq(
+  private val doobie: Seq[ModuleID] = Seq(
     "org.tpolecat" %% "doobie-scalatest" % versions("doobie")
   ).map(_ % Test)
 
@@ -89,6 +89,6 @@ object Dependencies {
 
   val testDeps: Seq[ModuleID] =
     scalaTest.union(scalaMock)
-             .union(doobieTest)
+             .union(doobie)
 
 }
