@@ -6,6 +6,7 @@ import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 import com.romanidze.transportik.config.{ ApplicationConfig, ConfigurationLoader }
 import com.romanidze.transportik.modules.ApplicationModule
+
 object Server {
 
   val appConfig: ApplicationConfig = ConfigurationLoader.load
