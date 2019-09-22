@@ -54,13 +54,6 @@ object Dependencies {
     "org.typelevel" %% "cats-core" % versions("cats")
   )
 
-  //macwire
-  private val macwire: Seq[ModuleID] = Seq(
-    "com.softwaremill.macwire" %% "macros" % versions("macwire") % "provided",
-    "com.softwaremill.macwire" %% "util" % versions("macwire"),
-    "com.softwaremill.macwire" %% "proxy" % versions("macwire") % "provided"
-  )
-
   //db
   private val db: Seq[ModuleID] = Seq(
 
@@ -92,7 +85,6 @@ object Dependencies {
     web.union(pureConfig)
        .union(logging)
        .union(cats)
-       .union(macwire)
        .union(db)
 
   val testDeps: Seq[ModuleID] =
