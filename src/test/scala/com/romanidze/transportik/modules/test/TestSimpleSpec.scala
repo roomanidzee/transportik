@@ -1,9 +1,12 @@
 package com.romanidze.transportik.modules.test
 
 import cats.effect.IO
-import org.http4s.{ Method, Request, Status, Uri }
+import io.circe.Decoder
+import io.circe.generic.semiauto.deriveDecoder
+import org.http4s.{ EntityDecoder, Method, Request, Status, Uri }
 import org.scalatest.{ Matchers, WordSpec }
 import org.http4s.syntax.kleisli._
+import org.http4s.circe.jsonOf
 
 class TestSimpleSpec extends WordSpec with Matchers {
 
@@ -12,11 +15,13 @@ class TestSimpleSpec extends WordSpec with Matchers {
 
         val request = Request[IO](Method.GET, Uri.uri("/test"))
 
-        val responseIO = new TestRoutes[IO]().routes.orNotFound(request).unsafeRunSync()
+        val responseIO                                                    = new TestRoutes[IO]().routes.orNotFound(request).unsafeRunSync()
+        implicit val messageDecoder: Decoder[MessageResponse]             = deriveDecoder[MessageResponse]
+        implicit val messageIODecoder: EntityDecoder[IO, MessageResponse] = jsonOf[IO, MessageResponse]
 
         responseIO.status shouldBe Status.Ok
 
-        responseIO.as[String].unsafeRunSync() shouldBe """{"message":"hello!"}"""
+        responseIO.as[MessageResponse].unsafeRunSync() shouldBe MessageResponse(message = "hello!")
 
       }
     }
