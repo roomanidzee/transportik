@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <preConditions>
+        <runningAs username="transportik_user"/>
+    </preConditions>
+
+    <changeSet id="1" author="andrey_romanov" context="main">
+        <createTable tableName="users">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(100)"/>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="andrey_romanov" context="main">
+        <createTable tableName="profile">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints unique="true"/>
+            </column>
+            <column name="surname" type="varchar(100)"/>
+            <column name="name" type="varchar(100)"/>
+            <column name="patronymic" type="varchar(100)"/>
+            <column name="phone" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="andrey_romanov" context="main">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="profile"
+                                 constraintName="fk_profile_user"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

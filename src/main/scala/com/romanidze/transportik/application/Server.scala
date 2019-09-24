@@ -2,6 +2,7 @@ package com.romanidze.transportik.application
 
 import cats.Applicative
 import cats.effect._
+import com.romanidze.transportik.components.DBMigrations
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 import com.romanidze.transportik.config.{ ApplicationConfig, ConfigurationLoader }
@@ -14,7 +15,9 @@ object Server {
 
   def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]: Stream[F, ExitCode] = {
 
-    val module = new ApplicationModule[F](appConfig)
+    val module     = new ApplicationModule[F](appConfig)
+    val migrations = new DBMigrations[F](appConfig.jdbc, appConfig.liquibase)
+    migrations.run()
 
     for {
       exitCode <- BlazeServerBuilder[F]
