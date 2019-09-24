@@ -2,7 +2,7 @@ package com.romanidze.transportik.application
 
 import cats.Applicative
 import cats.effect._
-import com.romanidze.transportik.components.DBMigrations
+import com.romanidze.transportik.components.db.DBMigrations
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 import com.romanidze.transportik.config.{ ApplicationConfig, ConfigurationLoader }

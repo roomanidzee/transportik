@@ -1,4 +1,4 @@
-package com.romanidze.transportik.components
+package com.romanidze.transportik.components.db
 
 import java.sql.{ Connection, DriverManager }
 
@@ -6,8 +6,8 @@ import cats.effect.{ Async, ContextShift }
 import com.romanidze.transportik.config.{ JdbcConfig, LiquibaseConfig }
 import com.typesafe.scalalogging.StrictLogging
 import liquibase.Liquibase
-import liquibase.database.{ Database, DatabaseFactory }
 import liquibase.database.jvm.JdbcConnection
+import liquibase.database.{ Database, DatabaseFactory }
 import liquibase.resource.ClassLoaderResourceAccessor
 
 class DBMigrations[F[_]: Async: ContextShift](db: JdbcConfig, liquibase: LiquibaseConfig) extends StrictLogging {
