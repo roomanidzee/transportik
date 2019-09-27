@@ -1,11 +1,11 @@
-package com.romanidze.transportik.modules.user
+package com.romanidze.transportik.modules.user.repositories
 
 import cats.effect.{ Async, ContextShift }
-
+import com.romanidze.transportik.modules.user.domain.User
 import doobie._
 import doobie.implicits._
 
-trait UserRepository[F[_]] {
+trait UserRepositoryTrait[F[_]] {
   def findAll(): F[List[User]]
   def find(id: Long): F[Option[User]]
   def insert(model: User): F[Long]
@@ -13,10 +13,10 @@ trait UserRepository[F[_]] {
   def delete(id: Long): F[Int]
 }
 
-final class UserRepositoryImpl[F[_]: Async: ContextShift](xa: Transactor[F])
-    extends UserRepository[F] {
+final class UserRepository[F[_]: Async: ContextShift](xa: Transactor[F])
+    extends UserRepositoryTrait[F] {
 
-  import UserRepositoryImpl.SQL
+  import UserRepository.SQL
 
   override def findAll(): F[List[User]] =
     SQL.findAll
@@ -48,7 +48,7 @@ final class UserRepositoryImpl[F[_]: Async: ContextShift](xa: Transactor[F])
       .transact(xa)
 }
 
-object UserRepositoryImpl {
+object UserRepository {
 
   object SQL {
 

@@ -6,19 +6,17 @@ import com.romanidze.transportik.components.db.DBMigrations
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 import com.romanidze.transportik.config.{ ApplicationConfig, ConfigurationLoader }
-import com.romanidze.transportik.modules.ApplicationModule
+import com.romanidze.transportik.modules.main.ApplicationModule
 
 object Server {
 
   val appConfig: ApplicationConfig = ConfigurationLoader.load
     .fold(
-      e =>
-        sys.error(s"Failed to load configuration:\n${e.toList.mkString("\n")}"),
+      e => sys.error(s"Failed to load configuration:\n${e.toList.mkString("\n")}"),
       identity
     )
 
-  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]
-    : Stream[F, ExitCode] = {
+  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]: Stream[F, ExitCode] = {
 
     val module     = new ApplicationModule[F](appConfig)
     val migrations = new DBMigrations[F](appConfig.jdbc, appConfig.liquibase)
