@@ -11,9 +11,14 @@ import com.romanidze.transportik.modules.ApplicationModule
 object Server {
 
   val appConfig: ApplicationConfig = ConfigurationLoader.load
-    .fold(e => sys.error(s"Failed to load configuration:\n${e.toList.mkString("\n")}"), identity)
+    .fold(
+      e =>
+        sys.error(s"Failed to load configuration:\n${e.toList.mkString("\n")}"),
+      identity
+    )
 
-  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]: Stream[F, ExitCode] = {
+  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]
+    : Stream[F, ExitCode] = {
 
     val module     = new ApplicationModule[F](appConfig)
     val migrations = new DBMigrations[F](appConfig.jdbc, appConfig.liquibase)

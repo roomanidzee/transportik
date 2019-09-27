@@ -10,13 +10,19 @@ import org.http4s.circe.{ jsonEncoderOf, jsonOf }
 
 class TestRoutes[F[_]: Sync] extends Http4sDsl[F] {
 
-  implicit val messageEncoder: Encoder.AsObject[MessageResponse]                          = deriveEncoder[MessageResponse]
-  implicit def messageEntityEncoder[F[_]: Applicative]: EntityEncoder[F, MessageResponse] = jsonEncoderOf
-  implicit val messageIOEncoder: EntityEncoder[IO, MessageResponse]                       = jsonEncoderOf[IO, MessageResponse]
+  implicit val messageEncoder: Encoder.AsObject[MessageResponse] =
+    deriveEncoder[MessageResponse]
+  implicit def messageEntityEncoder[F[_]: Applicative]
+    : EntityEncoder[F, MessageResponse] = jsonEncoderOf
+  implicit val messageIOEncoder: EntityEncoder[IO, MessageResponse] =
+    jsonEncoderOf[IO, MessageResponse]
 
-  implicit val messageDecoder: Decoder[MessageResponse]                            = deriveDecoder[MessageResponse]
-  implicit def messageEntityDecoder[F[_]: Sync]: EntityDecoder[F, MessageResponse] = jsonOf
-  implicit val messageIODecoder: EntityDecoder[IO, MessageResponse]                = jsonOf[IO, MessageResponse]
+  implicit val messageDecoder: Decoder[MessageResponse] =
+    deriveDecoder[MessageResponse]
+  implicit def messageEntityDecoder[F[_]: Sync]
+    : EntityDecoder[F, MessageResponse] = jsonOf
+  implicit val messageIODecoder: EntityDecoder[IO, MessageResponse] =
+    jsonOf[IO, MessageResponse]
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
     case req @ GET -> Root / "test" =>

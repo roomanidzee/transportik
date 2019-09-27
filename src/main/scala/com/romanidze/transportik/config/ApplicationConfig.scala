@@ -1,3 +1,7 @@
 package com.romanidze.transportik.config
 
-case class ApplicationConfig(server: ServerConfig, jdbc: JdbcConfig, liquibase: LiquibaseConfig)
+case class ApplicationConfig(
+  server: ServerConfig,
+  jdbc: JdbcConfig,
+  liquibase: LiquibaseConfig
+)

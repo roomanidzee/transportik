@@ -13,7 +13,8 @@ trait UserRepository[F[_]] {
   def delete(id: Long): F[Int]
 }
 
-final class UserRepositoryImpl[F[_]: Async: ContextShift](xa: Transactor[F]) extends UserRepository[F] {
+final class UserRepositoryImpl[F[_]: Async: ContextShift](xa: Transactor[F])
+    extends UserRepository[F] {
 
   import UserRepositoryImpl.SQL
 

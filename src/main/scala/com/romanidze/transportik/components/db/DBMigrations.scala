@@ -10,13 +10,17 @@ import liquibase.database.jvm.JdbcConnection
 import liquibase.database.{ Database, DatabaseFactory }
 import liquibase.resource.ClassLoaderResourceAccessor
 
-class DBMigrations[F[_]: Async: ContextShift](db: JdbcConfig, liquibase: LiquibaseConfig) extends StrictLogging {
+class DBMigrations[F[_]: Async: ContextShift](
+  db: JdbcConfig,
+  liquibase: LiquibaseConfig
+) extends StrictLogging {
 
   def prepareDB(connection: Connection): Liquibase = {
 
-    val database: Database = DatabaseFactory.getInstance.findCorrectDatabaseImplementation(
-      new JdbcConnection(connection)
-    )
+    val database: Database =
+      DatabaseFactory.getInstance.findCorrectDatabaseImplementation(
+        new JdbcConnection(connection)
+      )
 
     database.setDatabaseChangeLogTableName(liquibase.logTable)
     database.setDatabaseChangeLogLockTableName(liquibase.lockTable)

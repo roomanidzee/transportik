@@ -12,6 +12,7 @@ class ApplicationModule[F[_]: Async: ContextShift](config: ApplicationConfig) {
 
   val testModule = new TestModule[F]
 
-  val router: Kleisli[F, Request[F], Response[F]] = Router[F](config.server.prefix -> testModule.routes).orNotFound
+  val router: Kleisli[F, Request[F], Response[F]] =
+    Router[F](config.server.prefix -> testModule.routes).orNotFound
 
 }
