@@ -7,7 +7,7 @@ import io.circe.{ Decoder, Encoder }
 import org.http4s.circe.{ jsonEncoderOf, jsonOf }
 import org.http4s.{ EntityDecoder, EntityEncoder }
 
-trait UserEncoder {
+trait UserPreparator {
 
   implicit val userEncoder: Encoder.AsObject[UserDTO]                          = deriveEncoder[UserDTO]
   implicit def userEntityEncoder[F[_]: Applicative]: EntityEncoder[F, UserDTO] = jsonEncoderOf
@@ -25,4 +25,4 @@ trait UserEncoder {
 
 }
 
-object UserEncoder extends UserEncoder
+object UserPreparator extends UserPreparator

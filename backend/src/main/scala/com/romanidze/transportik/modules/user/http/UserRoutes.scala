@@ -2,12 +2,12 @@ package com.romanidze.transportik.modules.user.http
 
 import cats.implicits._
 import cats.effect.Sync
-import com.romanidze.transportik.modules.user.dto.{ UserDTO, UserEncoder }
+import com.romanidze.transportik.modules.user.dto.{ UserDTO, UserPreparator }
 import com.romanidze.transportik.modules.user.services.UserService
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 
-class UserRoutes[F[_]: Sync](service: UserService[F]) extends Http4sDsl[F] with UserEncoder {
+class UserRoutes[F[_]: Sync](service: UserService[F]) extends Http4sDsl[F] with UserPreparator {
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 

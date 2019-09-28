@@ -20,7 +20,9 @@ object Dependencies {
     "liquibase" -> "3.8.0",
 
     "scala-logging" -> "3.9.2",
-    "logback" -> "1.2.3"
+    "logback" -> "1.2.3",
+
+    "shapeless" -> "2.3.3"
 
   )
 
@@ -54,8 +56,8 @@ object Dependencies {
     "org.typelevel" %% "cats-core" % versions("cats")
   )
 
-  //db
-  private val db: Seq[ModuleID] = Seq(
+  //jdbc
+  private val jdbc: Seq[ModuleID] = Seq(
 
     "org.tpolecat" %% "doobie-core" % versions("doobie"),
     "org.tpolecat" %% "doobie-postgres" % versions("doobie"),
@@ -65,6 +67,11 @@ object Dependencies {
 
     "org.liquibase" % "liquibase-core" % versions("liquibase")
 
+  )
+
+  //shapeless
+  private val shapeless: Seq[ModuleID] = Seq(
+    "com.chuusai" %% "shapeless" % versions("shapeless")
   )
 
   //tests
@@ -85,7 +92,8 @@ object Dependencies {
     web.union(pureConfig)
        .union(logging)
        .union(cats)
-       .union(db)
+       .union(jdbc)
+       .union(shapeless)
 
   val testDeps: Seq[ModuleID] =
     scalaTest.union(scalaMock)
