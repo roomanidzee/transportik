@@ -4,3 +4,7 @@ case class UserDTO(
   username: String,
   password: String
 )
+
+case class Results(
+  result: List[UserDTO]
+)

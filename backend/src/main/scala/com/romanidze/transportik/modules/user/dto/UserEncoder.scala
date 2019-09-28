@@ -13,11 +13,11 @@ trait UserEncoder {
   implicit def userEntityEncoder[F[_]: Applicative]: EntityEncoder[F, UserDTO] = jsonEncoderOf
   implicit val userIOEncoder: EntityEncoder[IO, UserDTO]                       = jsonEncoderOf[IO, UserDTO]
 
-  implicit val userListEncoder: Encoder.AsObject[List[UserDTO]] = deriveEncoder[List[UserDTO]]
-  implicit def userListEntityEncoder[F[_]: Applicative]: EntityEncoder[F, List[UserDTO]] =
+  implicit val userListEncoder: Encoder.AsObject[Results] = deriveEncoder[Results]
+  implicit def userListEntityEncoder[F[_]: Applicative]: EntityEncoder[F, Results] =
     jsonEncoderOf
-  implicit val userListIOEncoder: EntityEncoder[IO, List[UserDTO]] =
-    jsonEncoderOf[IO, List[UserDTO]]
+  implicit val userListIOEncoder: EntityEncoder[IO, Results] =
+    jsonEncoderOf[IO, Results]
 
   implicit val userDecoder: Decoder[UserDTO]                            = deriveDecoder[UserDTO]
   implicit def userEntityDecoder[F[_]: Sync]: EntityDecoder[F, UserDTO] = jsonOf
