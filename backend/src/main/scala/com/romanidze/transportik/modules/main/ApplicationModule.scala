@@ -4,7 +4,6 @@ import cats.data.Kleisli
 import cats.implicits._
 import cats.effect.{ Async, Blocker, Concurrent, ContextShift }
 import com.romanidze.transportik.config.ApplicationConfig
-import com.romanidze.transportik.modules.test.TestModule
 import com.romanidze.transportik.modules.user.UserModule
 import doobie.util.ExecutionContexts
 import doobie.util.transactor.Transactor
@@ -24,8 +23,6 @@ class ApplicationModule[F[_]: Concurrent: Async: ContextShift](config: Applicati
     config.jdbc.password,
     Blocker.liftExecutionContext(ExecutionContexts.synchronous)
   )
-
-  val testModule = new TestModule[F]
   val userModule = new UserModule[F](transactor)
 
   private val router: Kleisli[F, Request[F], Response[F]] =
