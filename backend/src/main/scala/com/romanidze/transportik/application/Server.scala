@@ -25,7 +25,7 @@ object Server {
     for {
       exitCode <- BlazeServerBuilder[F]
                    .bindHttp(appConfig.server.port, appConfig.server.host)
-                   .withHttpApp(module.router)
+                   .withHttpApp(module.httpApp)
                    .serve
     } yield exitCode
   }

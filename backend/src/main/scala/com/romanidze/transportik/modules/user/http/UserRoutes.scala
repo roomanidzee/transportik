@@ -11,9 +11,9 @@ class UserRoutes[F[_]: Sync](service: UserService[F]) extends Http4sDsl[F] with 
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
-    case GET -> Root => Ok(service.getUsers)
+    case GET -> Root / "users" => Ok(service.getUsers)
 
-    case req @ POST -> Root / "create" =>
+    case req @ POST -> Root / "users" / "create" =>
       for {
         userDTO <- req.as[UserDTO]
         result  <- service.saveUser(userDTO)
