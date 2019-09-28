@@ -9,6 +9,11 @@
         <runningAs username="transportik_user"/>
     </preConditions>
 
-    <include file="migrations/initial/create-extensions.xml"/>
+    <changeSet id="1" author="andrey_romanov" context="main">
+        <sqlFile encoding="utf8"
+                 path="sql/extensions.sql"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
 
 </databaseChangeLog>

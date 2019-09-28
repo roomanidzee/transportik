@@ -10,6 +10,13 @@
     </preConditions>
 
     <changeSet id="1" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="users">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -22,6 +29,13 @@
     </changeSet>
 
     <changeSet id="2" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="profile"/>
+            </not>
+        </preConditions>
+
         <createTable tableName="profile">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -37,6 +51,13 @@
     </changeSet>
 
     <changeSet id="3" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="fk_profile_user"/>
+            </not>
+        </preConditions>
+
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="profile"
                                  constraintName="fk_profile_user"

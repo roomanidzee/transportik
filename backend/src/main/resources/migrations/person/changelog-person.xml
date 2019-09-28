@@ -9,6 +9,6 @@
         <runningAs username="transportik_user"/>
     </preConditions>
 
-    <include file="migrations/initial/create-extensions.xml"/>
+    <include file="migrations/person/create-person-tables-1.xml"/>
 
 </databaseChangeLog>

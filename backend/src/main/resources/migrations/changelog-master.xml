@@ -10,5 +10,6 @@
     </preConditions>
 
     <include file="migrations/initial/changelog-initial.xml"/>
+    <include file="migrations/person/changelog-person.xml"/>
 
 </databaseChangeLog>
