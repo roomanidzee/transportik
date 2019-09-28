@@ -9,9 +9,7 @@
         <runningAs username="transportik_user"/>
     </preConditions>
 
-    <include file="migrations/initial/changelog-initial.xml"/>
-    <include file="migrations/person/changelog-person.xml"/>
-    <include file="migrations/trip/changelog-trip.xml"/>
-    <include file="migrations/transport/changelog-transport.xml"/>
+    <include file="migrations/trip/create-trip-tables-1.xml"/>
+    <include file="migrations/trip/trip-relations-2.xml"/>
 
 </databaseChangeLog>

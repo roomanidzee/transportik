@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <runningAs username="transportik_user"/>
+    </preConditions>
+
+    <changeSet id="create_transport_table" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="transport_info"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="transport_info">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="TEXT"/>
+            <column name="length" type="BIGINT"/>
+            <column name="tonnage" type="BIGINT"/>
+            <column name="created_time" type="TIMESTAMP"/>
+            <column name="type" type="VARCHAR(50)"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="create_position_table" author="andrey_romanov" context="main">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="transport_position"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="transport_position">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="transport_id" type="INTEGER"/>
+            <column name="coordinate" type="GEOMETRY(Point, 4326)"/>
+            <column name="record_date" type="TIMESTAMP"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="relation_transport_position" author="andrey_romanov" context="main">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="transport_pos_fk"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseColumnNames="transport_id"
+                                 baseTableName="transport_position"
+                                 constraintName="transport_pos_fk"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transport_info"/>
+
+    </changeSet>
+
+</databaseChangeLog>

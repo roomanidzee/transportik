@@ -9,7 +9,7 @@
         <runningAs username="transportik_user"/>
     </preConditions>
 
-    <changeSet id="1" author="andrey_romanov" context="main">
+    <changeSet id="create_extensions" author="andrey_romanov" context="main">
         <sqlFile encoding="utf8"
                  path="sql/extensions.sql"
                  splitStatements="true"

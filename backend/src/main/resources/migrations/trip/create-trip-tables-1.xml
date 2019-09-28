@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <preConditions>
+        <runningAs username="transportik_user"/>
+    </preConditions>
+
+    <changeSet id="create_trip_table" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trip"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="trip">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            
+            <column name="source" type="GEOMETRY(Point, 4326)"/>
+            <column name="target" type="GEOMETRY(Point, 4326)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

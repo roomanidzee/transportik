@@ -9,7 +9,7 @@
         <runningAs username="transportik_user"/>
     </preConditions>
 
-    <changeSet id="1" author="andrey_romanov" context="main">
+    <changeSet id="create_user_table" author="andrey_romanov" context="main">
 
         <preConditions onFail="MARK_RAN">
             <not>
@@ -28,7 +28,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="andrey_romanov" context="main">
+    <changeSet id="create_profile_table" author="andrey_romanov" context="main">
 
         <preConditions onFail="MARK_RAN">
             <not>
@@ -50,7 +50,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="andrey_romanov" context="main">
+    <changeSet id="relation_profile2users" author="andrey_romanov" context="main">
 
         <preConditions onFail="MARK_RAN">
             <not>

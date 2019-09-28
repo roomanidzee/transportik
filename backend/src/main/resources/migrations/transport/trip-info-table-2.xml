@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <preConditions>
+        <runningAs username="transportik_user"/>
+    </preConditions>
+
+    <changeSet id="create_trip_info_table" author="andrey_romanov" context="main">
+
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="trip_info"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="trip_info">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="trip_id" type="INTEGER"/>
+            <column name="transport_id" type="INTEGER"/>
+            <column name="cost" type="BIGINT"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="relations_trip_info" author="andrey_romanov" context="main">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="trip_info_fk"/>
+                <foreignKeyConstraintExists foreignKeyName="transport_info_fk"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseColumnNames="trip_id"
+                                 baseTableName="trip_info"
+                                 constraintName="trip_info_fk"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="trip"/>
+
+        <addForeignKeyConstraint baseColumnNames="transport_id"
+                                 baseTableName="trip_info"
+                                 constraintName="transport_info_fk"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transport_info"/>
+
+    </changeSet>
+
+</databaseChangeLog>
