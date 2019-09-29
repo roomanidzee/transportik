@@ -5,11 +5,12 @@ object Dependencies {
   private val versions: Map[String, String] = Map(
 
     "http4s" -> "0.20.10",
+
     "circe" -> "0.12.1",
 
     "pureconfig" -> "0.12.0",
-    "scala_test" -> "3.0.8",
-    "scala_mock" -> "4.4.0",
+    "scala-test" -> "3.0.8",
+    "scala-mock" -> "4.4.0",
 
     "cats" -> "2.0.0",
 
@@ -23,24 +24,27 @@ object Dependencies {
     "scala-logging" -> "3.9.2",
     "logback" -> "1.2.3",
 
-    "shapeless" -> "2.3.3",
-
     "cassandra" -> "1.1.4"
 
   )
 
-  //web
-  private val web: Seq[ModuleID] = Seq(
-
+  //http4s
+  private val http4s: Seq[ModuleID] = Seq(
     "org.http4s" %% "http4s-blaze-server" % versions("http4s"),
     "org.http4s" %% "http4s-blaze-client" % versions("http4s"),
     "org.http4s" %% "http4s-circe" % versions("http4s"),
-    "org.http4s" %% "http4s-dsl" % versions("http4s"),
+    "org.http4s" %% "http4s-dsl" % versions("http4s")
+  )
 
+  //circe
+  private val circe: Seq[ModuleID] = Seq(
     "io.circe" %% "circe-generic" % versions("circe"),
     "io.circe" %% "circe-literal" % versions("circe"),
     "io.circe" %% "circe-parser" % versions("circe")
   )
+
+  //web
+  private val web: Seq[ModuleID] = http4s.union(circe)
 
   //pureconfig
   private val pureConfig: Seq[ModuleID] = Seq(
@@ -80,19 +84,14 @@ object Dependencies {
     "com.evolutiongaming" %% "scassandra" % versions("cassandra")
   )
 
-  //shapeless
-  private val shapeless: Seq[ModuleID] = Seq(
-    "com.chuusai" %% "shapeless" % versions("shapeless")
-  )
-
   //tests
   private val scalaTest: Seq[ModuleID] = Seq(
-    "org.scalatest" %% "scalatest" % versions("scala_test"),
-    "org.scalactic" %% "scalactic" % versions("scala_test")
+    "org.scalatest" %% "scalatest" % versions("scala-test"),
+    "org.scalactic" %% "scalactic" % versions("scala-test")
   ).map(_ % Test)
 
   private val scalaMock: Seq[ModuleID] = Seq(
-    "org.scalamock" %% "scalamock" % versions("scala_mock")
+    "org.scalamock" %% "scalamock" % versions("scala-mock")
   ).map(_ % Test)
 
   private val doobieTest: Seq[ModuleID] = Seq(
@@ -103,7 +102,6 @@ object Dependencies {
     web.union(pureConfig)
        .union(logging)
        .union(cats)
-       .union(shapeless)
        .union(jdbc)
        .union(cassandra)
 
