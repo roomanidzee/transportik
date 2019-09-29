@@ -16,7 +16,7 @@ trait ProfileRepositoryTrait[F[_]] {
 
 }
 
-class ProfileRepository[F[_]: Async: ContextShift](xa: Transactor[F])
+final class ProfileRepository[F[_]: Async: ContextShift](xa: Transactor[F])
     extends ProfileRepositoryTrait[F] {
 
   import ProfileRepository.SQL

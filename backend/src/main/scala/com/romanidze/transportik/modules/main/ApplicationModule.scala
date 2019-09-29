@@ -13,15 +13,17 @@ import org.http4s.server.Router
 import org.http4s.syntax.kleisli._
 import org.http4s.{ Headers, Request, Response }
 import org.http4s.server.middleware.{ CORS, Logger }
-
 import java.util.concurrent.Executors
+
+import com.romanidze.transportik.modules.profile.ProfileModule
+
 import scala.concurrent.ExecutionContext
 
 class ApplicationModule[F[_]: Concurrent: Async: ContextShift](config: ApplicationConfig) {
 
   Class.forName(config.jdbc.driver)
 
-  val datasource = new HikariDataSource
+  private val datasource = new HikariDataSource
 
   datasource.setJdbcUrl(config.jdbc.url)
   datasource.setUsername(config.jdbc.user)
@@ -29,17 +31,20 @@ class ApplicationModule[F[_]: Concurrent: Async: ContextShift](config: Applicati
   datasource.setMaximumPoolSize(config.jdbc.poolSize)
   datasource.setConnectionTimeout(config.jdbc.connectionTimeout)
 
-  val transactor: Aux[F, HikariDataSource] = Transactor.fromDataSource[F](
+  private val transactor: Aux[F, HikariDataSource] = Transactor.fromDataSource[F](
     datasource,
     ExecutionContext.fromExecutor(Executors.newFixedThreadPool(config.jdbc.threadNumber)),
     Blocker.liftExecutorService(Executors.newCachedThreadPool())
   )
 
-  val userModule = new UserModule[F](transactor)
+  private val userModule    = new UserModule[F](transactor)
+  private val profileModule = new ProfileModule[F](transactor)
+
+  private val routes = userModule.routes <+> profileModule.routes
 
   private val router: Kleisli[F, Request[F], Response[F]] =
     Router[F](
-      config.server.prefix -> userModule.routes
+      config.server.prefix -> routes
     ).orNotFound
 
   private val loggedRouter = Logger.httpApp[F](
