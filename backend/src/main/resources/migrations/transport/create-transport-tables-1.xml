@@ -25,7 +25,7 @@
             <column name="length" type="BIGINT"/>
             <column name="tonnage" type="BIGINT"/>
             <column name="created_time" type="TIMESTAMP"/>
-            <column name="type" type="VARCHAR(50)"/>
+            <column name="type" type="SMALLINT"/>
         </createTable>
 
     </changeSet>

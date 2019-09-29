@@ -31,3 +31,5 @@ trait TransportAnalysisPreparator {
     jsonEncoderOf[IO, TransportAnalysisDomain]
 
 }
+
+object TransportAnalysisPreparator extends TransportAnalysisPreparator

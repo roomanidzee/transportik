@@ -6,7 +6,6 @@ import cats.effect.{Async, Blocker, Concurrent, ContextShift}
 import com.romanidze.transportik.config.ApplicationConfig
 import com.romanidze.transportik.modules.user.UserModule
 import com.zaxxer.hikari.HikariDataSource
-import doobie.util.ExecutionContexts
 import doobie.util.transactor.Transactor
 import doobie.util.transactor.Transactor.Aux
 import org.http4s.server.Router

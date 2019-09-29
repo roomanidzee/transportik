@@ -24,7 +24,9 @@ object Dependencies {
     "scala-logging" -> "3.9.2",
     "logback" -> "1.2.3",
 
-    "cassandra" -> "1.1.4"
+    "cassandra" -> "1.1.4",
+
+    "enumeratum" -> "1.5.13"
 
   )
 
@@ -45,6 +47,11 @@ object Dependencies {
 
   //web
   private val web: Seq[ModuleID] = http4s.union(circe)
+
+  //enumeratum
+  private val enumeratum: Seq[ModuleID] = Seq(
+    "com.beachape" %% "enumeratum" % versions("enumeratum")
+  )
 
   //pureconfig
   private val pureConfig: Seq[ModuleID] = Seq(
@@ -104,6 +111,7 @@ object Dependencies {
        .union(cats)
        .union(jdbc)
        .union(cassandra)
+       .union(enumeratum)
 
   val testDeps: Seq[ModuleID] =
     scalaTest.union(scalaMock)
