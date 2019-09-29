@@ -5,5 +5,7 @@ case class JdbcConfig(
   driver: String,
   user: String,
   password: String,
-  connections: Int
+  poolSize: Int,
+  connectionTimeout: Int,
+  threadNumber: Int
 )
