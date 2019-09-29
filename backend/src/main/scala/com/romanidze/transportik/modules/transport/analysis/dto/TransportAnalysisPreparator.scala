@@ -11,7 +11,7 @@ import org.http4s.EntityEncoder
 
 trait TransportAnalysisPreparator {
 
-  private val timeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss V z")
+  private val timeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
 
   implicit val analysisEncoder: Encoder[TransportAnalysisDomain] =
     (a: TransportAnalysisDomain) =>

@@ -1,22 +1,22 @@
 package com.romanidze.transportik.modules.transport.core.repositories
 
-import cats.effect.{Async, ContextShift}
+import cats.effect.{ Async, ContextShift }
 import com.romanidze.transportik.modules.transport.core.domain.TransportDomain.TransportInfo
 import doobie._
 import doobie.implicits._
 
 trait TransportRepositoryTrait[F[_]] {
 
-   def findAll(): F[List[TransportInfo]]
-   def find(id: Long): F[Option[TransportInfo]]
-   def insert(model: TransportInfo): F[Long]
-   def update(id: Long, model: TransportInfo): F[Int]
-   def delete(id: Long): F[Int]
+  def findAll(): F[List[TransportInfo]]
+  def find(id: Long): F[Option[TransportInfo]]
+  def insert(model: TransportInfo): F[Long]
+  def update(id: Long, model: TransportInfo): F[Int]
+  def delete(id: Long): F[Int]
 
 }
 
 class TransportRepository[F[_]: Async: ContextShift](xa: Transactor[F])
-  extends TransportRepositoryTrait[F]{
+    extends TransportRepositoryTrait[F] {
 
   import TransportRepository.SQL
 
@@ -50,9 +50,9 @@ class TransportRepository[F[_]: Async: ContextShift](xa: Transactor[F])
       .transact(xa)
 }
 
-object TransportRepository{
-  
-  object SQL{
+object TransportRepository {
+
+  object SQL {
 
     def findAll: Query0[TransportInfo] =
       sql"""SELECT * FROM transport_info""".query[TransportInfo]
@@ -77,7 +77,7 @@ object TransportRepository{
 
     def delete(id: Long): Update0 =
       sql"""DELETE FROM transport_info WHERE id = $id""".update
-    
+
   }
-  
+
 }

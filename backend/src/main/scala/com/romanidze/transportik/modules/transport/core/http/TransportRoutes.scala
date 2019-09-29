@@ -8,7 +8,9 @@ import com.romanidze.transportik.modules.transport.core.services.TransportServic
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 
-class TransportRoutes[F[_]: Sync](service: TransportService[F]) extends Http4sDsl[F] with TransportPreparator {
+class TransportRoutes[F[_]: Sync](service: TransportService[F])
+    extends Http4sDsl[F]
+    with TransportPreparator {
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
@@ -16,9 +18,9 @@ class TransportRoutes[F[_]: Sync](service: TransportService[F]) extends Http4sDs
 
     case req @ POST -> Root / "transport" / "create" =>
       for {
-         transportDTO <- req.as[TransportInfoEntity]
-         result <- service.saveTransport(transportDTO)
-         resp <- Ok(result)
+        transportDTO <- req.as[TransportInfoEntity]
+        result       <- service.saveTransport(transportDTO)
+        resp         <- Ok(result)
       } yield resp
 
   }
