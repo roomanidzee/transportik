@@ -11,7 +11,8 @@ scalafmtOnCompile := true
 
 resolvers ++= Seq(
   Resolver.mavenCentral,
-  Resolver.mavenLocal
+  Resolver.mavenLocal,
+  Resolver.bintrayRepo("evolutiongaming", "maven")
 )
 
 scalacOptions ++= Seq(

@@ -17,12 +17,15 @@ object Dependencies {
 
     "doobie" -> "0.8.2",
     "postgresql" -> "42.2.6",
+    "postgis-jdbc" -> "2.3.0",
     "liquibase" -> "3.8.0",
 
     "scala-logging" -> "3.9.2",
     "logback" -> "1.2.3",
 
-    "shapeless" -> "2.3.3"
+    "shapeless" -> "2.3.3",
+
+    "cassandra" -> "1.1.4"
 
   )
 
@@ -56,17 +59,25 @@ object Dependencies {
     "org.typelevel" %% "cats-core" % versions("cats")
   )
 
+  //doobie
+  private val doobie: Seq[ModuleID] = Seq(
+    "org.tpolecat" %% "doobie-core" % versions("doobie"),
+    "org.tpolecat" %% "doobie-postgres" % versions("doobie"),
+    "org.tpolecat" %% "doobie-hikari" % versions("doobie")
+  )
+
   //jdbc
   private val jdbc: Seq[ModuleID] = Seq(
 
-    "org.tpolecat" %% "doobie-core" % versions("doobie"),
-    "org.tpolecat" %% "doobie-postgres" % versions("doobie"),
-    "org.tpolecat" %% "doobie-hikari" % versions("doobie"),
-
     "org.postgresql" % "postgresql" % versions("postgresql"),
+    "org.liquibase" % "liquibase-core" % versions("liquibase"),
+    "net.postgis" % "postgis-jdbc" % versions("postgis-jdbc")
 
-    "org.liquibase" % "liquibase-core" % versions("liquibase")
+  ).union(doobie)
 
+  //cassandra
+  private val cassandra: Seq[ModuleID] = Seq(
+    "com.evolutiongaming" %% "scassandra" % versions("cassandra")
   )
 
   //shapeless
@@ -84,7 +95,7 @@ object Dependencies {
     "org.scalamock" %% "scalamock" % versions("scala_mock")
   ).map(_ % Test)
 
-  private val doobie: Seq[ModuleID] = Seq(
+  private val doobieTest: Seq[ModuleID] = Seq(
     "org.tpolecat" %% "doobie-scalatest" % versions("doobie")
   ).map(_ % Test)
 
@@ -92,11 +103,12 @@ object Dependencies {
     web.union(pureConfig)
        .union(logging)
        .union(cats)
-       .union(jdbc)
        .union(shapeless)
+       .union(jdbc)
+       .union(cassandra)
 
   val testDeps: Seq[ModuleID] =
     scalaTest.union(scalaMock)
-             .union(doobie)
+             .union(doobieTest)
 
 }
