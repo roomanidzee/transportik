@@ -1,7 +1,7 @@
 package com.romanidze.transportik.modules.trip.core.mappers
 
 import com.romanidze.transportik.components.db.PointEntity
-import com.romanidze.transportik.modules.trip.core.domain.TripDomain.{TripDBInput, TripDBOutput}
+import com.romanidze.transportik.modules.trip.core.domain.TripDomain.{ TripDBInput, TripDBOutput }
 import com.romanidze.transportik.modules.trip.core.dto.TripDTO.TripEntity
 
 object TripMapper {

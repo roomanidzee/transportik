@@ -8,7 +8,9 @@ import com.romanidze.transportik.modules.trip.info.services.TripInfoService
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
 
-class TripInfoRoutes[F[_]: Sync](service: TripInfoService[F]) extends Http4sDsl[F] with TripInfoPreparator {
+class TripInfoRoutes[F[_]: Sync](service: TripInfoService[F])
+    extends Http4sDsl[F]
+    with TripInfoPreparator {
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
@@ -17,8 +19,8 @@ class TripInfoRoutes[F[_]: Sync](service: TripInfoService[F]) extends Http4sDsl[
     case req @ POST -> Root / "trip_info" / "create" =>
       for {
         tripInfoDTO <- req.as[TripInfoEntity]
-        result <- service.saveTripInfo(tripInfoDTO)
-        resp <- Ok(result)
+        result      <- service.saveTripInfo(tripInfoDTO)
+        resp        <- Ok(result)
       } yield resp
 
   }

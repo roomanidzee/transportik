@@ -1,6 +1,6 @@
 package com.romanidze.transportik.modules.trip.info.repositories
 
-import cats.effect.{Async, ContextShift}
+import cats.effect.{ Async, ContextShift }
 import com.romanidze.transportik.modules.trip.info.domain.TripInfoDomain.TripInfo
 import doobie._
 import doobie.implicits._
@@ -16,7 +16,7 @@ trait TripInfoRepositoryTrait[F[_]] {
 }
 
 final class TripInfoRepository[F[_]: Async: ContextShift](xa: Transactor[F])
-   extends TripInfoRepositoryTrait[F]{
+    extends TripInfoRepositoryTrait[F] {
 
   import TripInfoRepository.SQL
 
@@ -50,7 +50,7 @@ final class TripInfoRepository[F[_]: Async: ContextShift](xa: Transactor[F])
       .transact(xa)
 }
 
-object TripInfoRepository{
+object TripInfoRepository {
 
   object SQL {
 

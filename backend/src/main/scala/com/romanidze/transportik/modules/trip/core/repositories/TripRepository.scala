@@ -1,11 +1,11 @@
 package com.romanidze.transportik.modules.trip.core.repositories
 
-import cats.effect.{Async, ContextShift}
-import com.romanidze.transportik.modules.trip.core.domain.TripDomain.{TripDBInput, TripDBOutput}
+import cats.effect.{ Async, ContextShift }
+import com.romanidze.transportik.modules.trip.core.domain.TripDomain.{ TripDBInput, TripDBOutput }
 import doobie._
 import doobie.implicits._
 
-trait TripRepositoryTrait[F[_]]{
+trait TripRepositoryTrait[F[_]] {
   def findAll(): F[List[TripDBOutput]]
   def find(id: Long): F[Option[TripDBOutput]]
   def insert(model: TripDBInput): F[Long]
@@ -13,15 +13,14 @@ trait TripRepositoryTrait[F[_]]{
   def delete(id: Long): F[Int]
 }
 
-class TripRepository[F[_]: Async: ContextShift](xa: Transactor[F])
-   extends TripRepositoryTrait[F]{
+class TripRepository[F[_]: Async: ContextShift](xa: Transactor[F]) extends TripRepositoryTrait[F] {
 
   import TripRepository.SQL
 
   override def findAll(): F[List[TripDBOutput]] =
     SQL.findAll
-    .to[List]
-    .transact(xa)
+      .to[List]
+      .transact(xa)
 
   override def find(id: Long): F[Option[TripDBOutput]] =
     SQL
@@ -48,14 +47,15 @@ class TripRepository[F[_]: Async: ContextShift](xa: Transactor[F])
       .transact(xa)
 }
 
-object TripRepository{
+object TripRepository {
 
   object SQL {
 
     import doobie.postgres.pgisimplicits._
 
     def findAll: Query0[TripDBOutput] =
-      sql"""SELECT id, ST_AsText(source) AS source, ST_AsText(target) AS target FROM trip""".query[TripDBOutput]
+      sql"""SELECT id, ST_AsText(source) AS source, ST_AsText(target) AS target FROM trip"""
+        .query[TripDBOutput]
 
     def find(id: Long): Query0[TripDBOutput] =
       sql"""SELECT id, ST_AsText(source) AS source, ST_AsText(target) AS target FROM trip

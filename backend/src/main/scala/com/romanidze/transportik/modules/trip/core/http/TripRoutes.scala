@@ -17,8 +17,8 @@ class TripRoutes[F[_]: Sync](service: TripService[F]) extends Http4sDsl[F] with 
     case req @ POST -> Root / "trips" / "create" =>
       for {
         tripDTO <- req.as[TripEntity]
-        result <- service.saveTrip(tripDTO)
-        resp <- Ok(result)
+        result  <- service.saveTrip(tripDTO)
+        resp    <- Ok(result)
       } yield resp
 
   }
