@@ -16,16 +16,16 @@ class TransportAnalysisRoutes[F[_]: Sync] extends Http4sDsl[F] with TransportAna
     case GET -> Root / "trips" / "analyse" =>
       for {
         resp <- Ok(
-          TransportAnalysisDomain(
-            ZonedDateTime.now(),
-            1,
-            isBusy = true,
-            isRepairing = true,
-            1,
-            1,
-            1
-          )
-        )
+                 TransportAnalysisDomain(
+                   ZonedDateTime.now(),
+                   1,
+                   isBusy = true,
+                   isRepairing = true,
+                   1,
+                   1,
+                   1
+                 )
+               )
       } yield resp
 
   }
