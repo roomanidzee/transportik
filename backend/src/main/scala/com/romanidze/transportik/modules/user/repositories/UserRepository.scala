@@ -64,7 +64,8 @@ object UserRepository {
            |""".stripMargin.update
 
     def update(id: Long, model: User): Update0 =
-      sql"""UPDATE users SET username = ${model.username}, password = ${model.password}
+      sql"""UPDATE users SET username = ${model.username},
+           |                 password = ${model.password}
            |WHERE id = $id
            |""".stripMargin.update
 

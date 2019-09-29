@@ -10,4 +10,5 @@ object ProfileDomain {
     patronymic: String,
     phone: String
   )
+
 }
