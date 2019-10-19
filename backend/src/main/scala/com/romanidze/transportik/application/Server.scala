@@ -2,6 +2,7 @@ package com.romanidze.transportik.application
 
 import cats.Applicative
 import cats.effect._
+import com.evolutiongaming.scassandra.util.FromGFuture
 import com.romanidze.transportik.components.db.DBMigrations
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
@@ -16,7 +17,8 @@ object Server {
       identity
     )
 
-  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer]: Stream[F, ExitCode] = {
+  def launch[F[_]: ConcurrentEffect: Applicative: ContextShift: Timer: FromGFuture]
+    : Stream[F, ExitCode] = {
 
     val module     = new ApplicationModule[F](appConfig)
     val migrations = new DBMigrations[F](appConfig.jdbc, appConfig.liquibase)
